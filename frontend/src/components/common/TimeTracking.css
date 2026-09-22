@@ -1,0 +1,181 @@
+.time-tracking-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 4px 0;
+}
+
+/* Active Timer Box */
+.active-timer-card {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.active-timer-card.running {
+  border: 1px solid rgba(129, 140, 248, 0.4);
+}
+
+.active-timer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.active-timer-title {
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-green 1.6s infinite;
+}
+
+@keyframes pulse-green {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.timer-digits {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #a5b4fc;
+  margin: 4px 0;
+}
+
+.active-timer-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Stats Header Card */
+.time-stats-card {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-subtle, #64748b);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-color, #4f46e5);
+}
+
+/* Manual Log Section */
+.manual-log-box {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.manual-log-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main, #0f172a);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.manual-log-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* Time Log Items List */
+.time-logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.time-log-item-card {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  transition: border-color 0.15s ease;
+}
+
+.time-log-item-card:hover {
+  border-color: var(--primary-color-alpha, #818cf8);
+}
+
+.time-log-user {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main, #0f172a);
+}
+
+.time-log-desc {
+  font-size: 13px;
+  color: var(--text-muted, #475569);
+  margin-top: 4px;
+}
+
+.time-log-meta {
+  font-size: 12px;
+  color: var(--text-subtle, #64748b);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.time-log-duration {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-color, #4f46e5);
+  background: rgba(79, 70, 229, 0.08);
+  padding: 4px 8px;
+  border-radius: 6px;
+}

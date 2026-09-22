@@ -1,0 +1,11 @@
+namespace TaskFlow.Domain.Entities;
+
+public class Permission : BaseEntity
+{
+    public string Key { get; set; } = string.Empty;
+
+    public string? Description { get; set; }
+
+    // Navigation Properties
+    public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
+}

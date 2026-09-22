@@ -1,0 +1,250 @@
+.task-attachments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Dropzone Upload Box */
+.attachment-dropzone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 16px;
+  border: 2px dashed var(--border-color, #cbd5e1);
+  border-radius: 8px;
+  background-color: var(--bg-hover, #f8fafc);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.attachment-dropzone:hover,
+.attachment-dropzone.drag-active {
+  border-color: var(--primary, #3b82f6);
+  background-color: var(--primary-light, #eff6ff);
+}
+
+.attachment-dropzone-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--bg-card, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary, #3b82f6);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.attachment-dropzone-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main, #1e293b);
+}
+
+.attachment-dropzone-sub {
+  font-size: 12px;
+  color: var(--text-subtle, #64748b);
+}
+
+.attachment-file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Upload Progress Bar */
+.upload-progress-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--bg-hover, #f1f5f9);
+  border: 1px solid var(--border-color, #e2e8f0);
+}
+
+.upload-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-main, #334155);
+}
+
+.upload-progress-track {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background-color: var(--border-color, #e2e8f0);
+  overflow: hidden;
+}
+
+.upload-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  background-color: var(--primary, #3b82f6);
+  transition: width 0.2s linear;
+}
+
+/* Attachments List */
+.attachments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.attachment-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  background-color: var(--bg-card, #ffffff);
+  transition: all 0.2s ease;
+}
+
+.attachment-item-card:hover {
+  border-color: var(--border-hover, #cbd5e1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.attachment-item-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.attachment-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.attachment-icon-box.image {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.attachment-icon-box.pdf {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.attachment-icon-box.doc {
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
+.attachment-icon-box.sheet {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.attachment-icon-box.archive {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.attachment-icon-box.default {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.attachment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.attachment-filename {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main, #0f172a);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.attachment-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-subtle, #64748b);
+}
+
+.attachment-size {
+  font-weight: 500;
+}
+
+.attachment-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.attachment-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-subtle, #64748b);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.attachment-action-btn:hover {
+  background-color: var(--bg-hover, #f1f5f9);
+  color: var(--primary, #3b82f6);
+}
+
+.attachment-action-btn.delete:hover {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.attachment-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  font-size: 13px;
+}
+
+.attachment-loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  color: var(--text-subtle, #64748b);
+  font-size: 13px;
+}
