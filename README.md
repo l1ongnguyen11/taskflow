@@ -4,6 +4,24 @@ TaskFlow is a modern, full-stack collaborative project management platform desig
 
 ---
 
+## 🔑 Demo / Test Accounts (Tài khoản thử nghiệm cho Nhà tuyển dụng)
+
+Hệ thống đã được tích hợp sẵn 2 tài khoản thử nghiệm cùng dữ liệu dự án mẫu (Workspaces, Projects, Kanban Boards với đầy đủ các cột trạng thái **To Do**, **In Progress**, **Code Review**, **Done**, Sprints, Comments, Time Logs và Checklists) để phục vụ cho nhà tuyển dụng / người đánh giá thử nghiệm nhanh chóng:
+
+| Vai trò | Email đăng nhập | Mật khẩu | Quyền hạn & Mô tả |
+| :--- | :--- | :--- | :--- |
+| **Trưởng nhóm (Team Lead / Owner)** | `lead@taskflow.dev` | `Password123!` | Quyền quản trị tối cao của Workspace (`TaskFlow Global Core`), quản lý dự án (`CSA`, `MAU`), phân quyền thành viên, quản lý Sprint, chỉnh sửa cài đặt. |
+| **Thành viên (Team Member)** | `member@taskflow.dev` | `Password123!` | Quyền thành viên tiêu chuẩn: xem dự án, kéo thả công việc trên Kanban Board, cập nhật tiến độ, đăng comment, ghi log thời gian. |
+
+> 💡 **Hướng dẫn kiểm thử nhanh cho Nhà tuyển dụng**:
+> 1. Chạy Backend (`dotnet run --project TaskFlow.API`) và Frontend (`npm run dev`). CSDL sẽ **tự động khởi tạo dữ liệu mẫu** khi khởi chạy lần đầu!
+> 2. Đăng nhập bằng tài khoản **Trưởng nhóm** (`lead@taskflow.dev` / `Password123!`).
+> 3. Truy cập Workspace **`TaskFlow Global Core`** ➔ Chọn dự án **`Core System Architecture (CSA)`**.
+> 4. Vào mục **Board** để trải nghiệm bảng Kanban đầy đủ các cột **To Do**, **In Progress**, **Code Review**, **Done** với thao tác kéo thả thẻ, xem thông tin chi tiết task, comment tương tác và log thời gian.
+> 5. Đăng xuất và đăng nhập bằng tài khoản **Thành viên** (`member@taskflow.dev` / `Password123!`) để kiểm thử phân quyền người dùng.
+
+---
+
 ## 🚀 Features
 
 - **Authentication & User Profiles**: User registration, JWT access token authentication, refresh token rotation, and profile management.

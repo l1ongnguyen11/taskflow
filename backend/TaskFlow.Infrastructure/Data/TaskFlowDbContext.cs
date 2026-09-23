@@ -12,57 +12,67 @@ public class TaskFlowDbContext : DbContext
     public TaskFlowDbContext(DbContextOptions<TaskFlowDbContext> options)
         : base(options)
     {
-        try
+        string[] sqlStatements = new[]
         {
-            Database.ExecuteSqlRaw("ALTER TABLE project ADD COLUMN IF NOT EXISTS is_archived BOOLEAN NOT NULL DEFAULT FALSE;");
-            Database.ExecuteSqlRaw("ALTER TABLE project_member ADD COLUMN IF NOT EXISTS role VARCHAR(50) NOT NULL DEFAULT 'member';");
-            Database.ExecuteSqlRaw("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS role VARCHAR(50) NOT NULL DEFAULT 'member';");
+            "ALTER TABLE project ADD COLUMN IF NOT EXISTS is_archived BOOLEAN NOT NULL DEFAULT FALSE;",
+            "ALTER TABLE project_member ADD COLUMN IF NOT EXISTS role VARCHAR(50) NOT NULL DEFAULT 'member';",
+            "ALTER TABLE invitation ADD COLUMN IF NOT EXISTS role VARCHAR(50) NOT NULL DEFAULT 'member';",
+            "ALTER TABLE role_permission ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE workspace_member ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE user_role ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE refresh_token ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE project_member ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE task_assignee ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE task_watcher ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE task_dependency ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE task_label ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE task_attachment ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE activity ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();",
+            "ALTER TABLE role ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE permission ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE role_permission ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE workspace_member ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE user_role ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE refresh_token ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE invitation ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE project_member ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE task_assignee ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE task_watcher ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE task_dependency ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE task_label ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE checklist ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE checklist_item ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE task_attachment ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE activity ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE notification ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "ALTER TABLE time_log ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;",
+            "DROP INDEX IF EXISTS uq_sprint_active_per_project;",
+            "ALTER TABLE sprint ALTER COLUMN status DROP DEFAULT;",
+            "ALTER TABLE sprint ALTER COLUMN status TYPE VARCHAR(50) USING status::text;",
+            "ALTER TABLE task ALTER COLUMN priority DROP DEFAULT;",
+            "ALTER TABLE task ALTER COLUMN priority TYPE VARCHAR(50) USING priority::varchar;",
+            "ALTER TABLE task ALTER COLUMN type DROP DEFAULT;",
+            "ALTER TABLE task ALTER COLUMN type TYPE VARCHAR(50) USING type::varchar;",
+            "ALTER TABLE task_dependency ALTER COLUMN type DROP DEFAULT;",
+            "ALTER TABLE task_dependency ALTER COLUMN type TYPE VARCHAR(50) USING type::varchar;",
+            "ALTER TABLE invitation ALTER COLUMN status DROP DEFAULT;",
+            "ALTER TABLE invitation ALTER COLUMN status TYPE VARCHAR(50) USING status::varchar;",
+            "ALTER TABLE notification ALTER COLUMN type DROP DEFAULT;",
+            "ALTER TABLE notification ALTER COLUMN type TYPE VARCHAR(50) USING type::varchar;",
+            "ALTER TABLE activity ALTER COLUMN action DROP DEFAULT;",
+            "ALTER TABLE activity ALTER COLUMN action TYPE VARCHAR(50) USING action::varchar;"
+        };
 
-            // Add missing updated_at columns for tables that only had created_at
-            Database.ExecuteSqlRaw("ALTER TABLE role_permission ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE workspace_member ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE user_role ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE refresh_token ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE project_member ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE task_assignee ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE task_watcher ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE task_dependency ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE task_label ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE task_attachment ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-            Database.ExecuteSqlRaw("ALTER TABLE activity ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ NOT NULL DEFAULT now();");
-
-            // Add missing deleted_at columns for all tables mapped via BaseEntity
-            Database.ExecuteSqlRaw("ALTER TABLE role ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE permission ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE role_permission ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE workspace_member ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE user_role ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE refresh_token ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE invitation ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE project_member ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE task_assignee ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE task_watcher ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE task_dependency ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE task_label ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE checklist ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE checklist_item ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE task_attachment ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE activity ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE notification ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-            Database.ExecuteSqlRaw("ALTER TABLE time_log ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;");
-
-            // Convert custom PostgreSQL enum columns to VARCHAR(50) so EF Core string properties map cleanly without 42804 type mismatches
-            Database.ExecuteSqlRaw("ALTER TABLE task ALTER COLUMN priority TYPE VARCHAR(50) USING priority::varchar;");
-            Database.ExecuteSqlRaw("ALTER TABLE task ALTER COLUMN type TYPE VARCHAR(50) USING type::varchar;");
-            Database.ExecuteSqlRaw("ALTER TABLE task_dependency ALTER COLUMN type TYPE VARCHAR(50) USING type::varchar;");
-            Database.ExecuteSqlRaw("ALTER TABLE invitation ALTER COLUMN status TYPE VARCHAR(50) USING status::varchar;");
-            Database.ExecuteSqlRaw("ALTER TABLE sprint ALTER COLUMN status TYPE VARCHAR(50) USING status::varchar;");
-            Database.ExecuteSqlRaw("ALTER TABLE notification ALTER COLUMN type TYPE VARCHAR(50) USING type::varchar;");
-            Database.ExecuteSqlRaw("ALTER TABLE activity ALTER COLUMN action TYPE VARCHAR(50) USING action::varchar;");
-        }
-        catch
+        foreach (var stmt in sqlStatements)
         {
-            // Ignore potential issues during migrations or initial seeding
+            try
+            {
+                Database.ExecuteSqlRaw(stmt);
+            }
+            catch
+            {
+                // Ignore individual schema alter failures
+            }
         }
     }
 

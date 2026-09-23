@@ -99,6 +99,21 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+// Seed database test accounts and demo data
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<TaskFlow.Infrastructure.Data.TaskFlowDbContext>();
+        var passwordHasher = scope.ServiceProvider.GetRequiredService<TaskFlow.Application.Interfaces.Security.IPasswordHasher>();
+        await TaskFlow.Infrastructure.Data.DbSeeder.SeedAsync(dbContext, passwordHasher);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[DbSeeder Error]: {ex.Message}");
+    }
+}
+
 // Global Centralized Exception Handling Middleware
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
